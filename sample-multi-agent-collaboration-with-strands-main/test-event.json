@@ -1,0 +1,8 @@
+[
+  {
+    "Source": "meal.request",
+    "DetailType": "Order-Placed",
+    "Detail": "{\"orderId\": \"12345\", \"customerId\": \"C-1234\", \"items\": [ \"fries\", \"cheesecake\" ]}",
+    "EventBusName": "orchestration-bus"
+  }
+]
