@@ -1,0 +1,55 @@
+from newsapi import NewsApiClient
+import pyttsx3
+from time import sleep
+
+# Text to Speech setup
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+def read_news():
+    newsapi = NewsApiClient(api_key=' ')
+
+    try:
+        data = newsapi.get_top_headlines(
+            country='us',
+            language='en',
+            page_size=5
+        )
+    except Exception as e:
+        print("Error calling NewsAPI:", e)
+        speak("There was an error fetching the news.")
+        return
+
+    # Debug: print the raw response
+    print("Raw API response:", data)
+
+    if data.get("status") != "ok":
+        print("API Error:", data.get("message"))
+        speak("There was an error fetching the news.")
+        return
+
+    articles = data.get('articles', [])
+
+    if not articles:
+        speak("Sorry, I couldn't find any news right now.")
+        return
+
+    for i, article in enumerate(articles, start=1):
+        desc = article.get("description") or "No description available"
+        print(f"{i}. {desc}")
+        speak(f"News {i}. {desc}")
+
+    speak("That's it for now. I will update you again in some time.")
+
+if __name__ == "__main__":
+    try:
+        while True:
+            read_news()
+            sleep(600)  # 10 minutes
+    except KeyboardInterrupt:
+        speak("Goodbye! Stay informed.")
