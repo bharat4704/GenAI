@@ -1,0 +1,113 @@
+import datetime
+
+
+class CricketPlayer:
+    team_size = 11
+
+    def __init__(self, fname, lname, birth_year, team):
+        self.first_name = fname
+        self.last_name = lname
+        self.birth_year = birth_year
+        self.team = team
+        self.scores = []
+
+    def add_score(self, score):
+        self.scores.append(score)
+
+    def get_average_score(self):
+        if not self.scores:
+            return 0
+        return sum(self.scores) / len(self.scores)
+
+    def get_age(self):
+        now = datetime.datetime.now()
+        return now.year - self.birth_year
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}, the cricket player from {self.team}"
+
+    def __lt__(self, other):
+        return self.get_average_score() < other.get_average_score()
+
+    def __eq__(self, other):
+        return self.get_age() == other.get_age()
+
+
+# -------------------------------
+# Create 15 Cricket Players
+# -------------------------------
+players = [
+    CricketPlayer("Virat", "Kohli", 1988, "India"),
+    CricketPlayer("Rohit", "Sharma", 1987, "India"),
+    CricketPlayer("KL", "Rahul", 1992, "India"),
+    CricketPlayer("Shubman", "Gill", 1999, "India"),
+    CricketPlayer("Hardik", "Pandya", 1993, "India"),
+
+    CricketPlayer("David", "Warner", 1988, "Australia"),
+    CricketPlayer("Steve", "Smith", 1989, "Australia"),
+    CricketPlayer("Joe", "Root", 1990, "England"),
+    CricketPlayer("Ben", "Stokes", 1991, "England"),
+    CricketPlayer("Babar", "Azam", 1994, "Pakistan"),
+
+    CricketPlayer("Kane", "Williamson", 1990, "New Zealand"),
+    CricketPlayer("AB", "de Villiers", 1984, "South Africa"),
+    CricketPlayer("Quinton", "de Kock", 1992, "South Africa"),
+    CricketPlayer("Shakib", "Al Hasan", 1987, "Bangladesh"),
+    CricketPlayer("Jos", "Buttler", 1990, "England")
+]
+
+# -------------------------------
+# Add Scores for Each Player
+# -------------------------------
+scores_list = [
+    [37, 100, 23],
+    [45, 67, 88],
+    [12, 56, 78],
+    [101, 45, 60],
+    [33, 76, 55],
+    [37, 23, 85],
+    [80, 90, 40],
+    [60, 72, 30],
+    [88, 50, 45],
+    [92, 65, 70],
+    [77, 88, 99],
+    [120, 90, 60],
+    [55, 65, 75],
+    [40, 85, 95],
+    [70, 68, 82]
+]
+
+for player, scores in zip(players, scores_list):
+    for score in scores:
+        player.add_score(score)
+
+# -------------------------------
+# Print All Players & Averages
+# -------------------------------
+print("\nPlayer Averages:\n" + "-" * 40)
+for player in players:
+    print(
+        f"{player.first_name} {player.last_name} | "
+        f"Team: {player.team} | "
+        f"Age: {player.get_age()} | "
+        f"Avg Score: {player.get_average_score():.2f}"
+    )
+
+# -------------------------------
+# Sort Players by Average Score
+# -------------------------------
+sorted_players = sorted(players, reverse=True)
+
+print("\nTop 5 Players by Average Score:\n" + "-" * 40)
+for player in sorted_players[:5]:
+    print(f"{player.first_name} {player.last_name} → {player.get_average_score():.2f}")
+
+# -------------------------------
+# Comparison Examples
+# -------------------------------
+print("\nComparisons:\n" + "-" * 40)
+print("Is Virat avg score less than David?",
+      players[0] < players[5])
+
+print("Is Virat same age as David?",
+      players[0] == players[5])

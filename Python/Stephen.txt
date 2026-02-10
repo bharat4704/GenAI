@@ -1,0 +1,13 @@
+Toppers_marks = {}
+
+with open("marks.csv", "r") as f:
+    for line in f:
+        topper, term, marks = line.strip().split(",")
+        marks = int(marks)
+
+        if topper not in Toppers_marks:
+            Toppers_marks[topper] = {}
+
+        Toppers_marks[topper][term] = marks
+
+print(Toppers_marks)
