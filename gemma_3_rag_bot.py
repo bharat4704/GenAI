@@ -21,7 +21,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 
 # --- Set Google API Key ---
-os.environ["GOOGLE_API_KEY"] = "AIzaSyA0B4CDYnZzqyMgBYD60RtU54ApSQwyghY"
+os.environ["GOOGLE_API_KEY"] = ""
 
 # --- Constants ---
 COLLECTION_NAME = "Gemma3_rag"
